@@ -2,15 +2,14 @@
 
 namespace FiftySq\Commerce\Channels;
 
-use FiftySq\Commerce\Channels\Clients\Shopify\AdminClient;
-use FiftySq\Commerce\Channels\Clients\Shopify\StorefrontClient;
-use FiftySq\Commerce\Channels\Contracts\HasDiscounts;
-use FiftySq\Commerce\Channels\Contracts\HasOrders;
-use FiftySq\Commerce\Channels\Contracts\HasShippingRates;
-use FiftySq\Commerce\Channels\Contracts\PullsProducts;
-use FiftySq\Commerce\Channels\Contracts\PushesProducts;
-use FiftySq\Commerce\Channels\Contracts\SendsToCheckout;
-use FiftySq\Commerce\Support\RequestMacros;
+use FiftySq\Commerce\Channels\Drivers\Clients\Shopify\AdminClient;
+use FiftySq\Commerce\Channels\Drivers\Clients\Shopify\StorefrontClient;
+use FiftySq\Commerce\Channels\Drivers\Contracts\HasDiscounts;
+use FiftySq\Commerce\Channels\Drivers\Contracts\HasOrders;
+use FiftySq\Commerce\Channels\Drivers\Contracts\HasShippingRates;
+use FiftySq\Commerce\Channels\Drivers\Contracts\PullsProducts;
+use FiftySq\Commerce\Channels\Drivers\Contracts\PushesProducts;
+use FiftySq\Commerce\Channels\Drivers\Contracts\SendsToCheckout;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Printful\PrintfulApiClient;
@@ -25,11 +24,8 @@ class ServiceProvider extends BaseServiceProvider implements DeferrableProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/channels.php', 'commerce.channels');
-
         $this->registerManagers();
         $this->registerChannels();
-
-        $this->app->register(EventServiceProvider::class);
     }
 
     /**
@@ -40,7 +36,6 @@ class ServiceProvider extends BaseServiceProvider implements DeferrableProvider
     public function boot()
     {
         $this->configurePublishing();
-        $this->configureMacros();
     }
 
     /**
@@ -61,16 +56,6 @@ class ServiceProvider extends BaseServiceProvider implements DeferrableProvider
         $this->publishes([
             __DIR__.'/../database/migrations/2021_04_19_000003_create_commerce_discounts_table.php' => database_path('migrations'),
         ], 'commerce-migrations-discounts');
-    }
-
-    /**
-     * Register the package macros.
-     *
-     * @return void
-     */
-    protected function configureMacros()
-    {
-        RequestMacros::register();
     }
 
     /**
@@ -124,8 +109,6 @@ class ServiceProvider extends BaseServiceProvider implements DeferrableProvider
 
     public function provides()
     {
-        return [
-            'commerce.channels',
-        ];
+        return ['commerce.channels'];
     }
 }

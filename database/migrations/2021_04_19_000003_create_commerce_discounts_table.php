@@ -1,6 +1,6 @@
 <?php
 
-use FiftySq\Commerce\Data\CommerceMigration;
+use FiftySq\Commerce\Support\Data\CommerceMigration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
