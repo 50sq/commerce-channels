@@ -7,9 +7,6 @@ use FiftySq\Commerce\Channels\Drivers\Contracts\HasShippingRates;
 use FiftySq\Commerce\Channels\Drivers\Contracts\PullsProducts;
 use FiftySq\Commerce\Channels\Drivers\Contracts\PushesProducts;
 use FiftySq\Commerce\Channels\Drivers\Contracts\SendsToCheckout;
-use FiftySq\Commerce\Channels\Drivers\Data\Models\PendingOrder;
-use FiftySq\Commerce\Channels\Drivers\Data\Order;
-use FiftySq\Commerce\Channels\Drivers\Data\ShippingAddress;
 use FiftySq\Commerce\Channels\Drivers\DriverManager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Manager;
@@ -220,7 +217,7 @@ class ChannelManager extends Manager implements
         // TODO: Implement removeVariantImages() method.
     }
 
-    public function sendToCheckout(PendingOrder $pending_order)
+    public function sendToCheckout($pending_order)
     {
         // TODO: Implement sendToCheckout() method.
     }
@@ -230,24 +227,17 @@ class ChannelManager extends Manager implements
         // TODO: Implement getOrder() method.
     }
 
-    public function estimateCost(Order $order, ?ShippingAddress $address, string $shippingMethod = null)
+    public function estimateCost($order, $address = null, string $shippingMethod = null)
     {
         // TODO: Implement estimateCost() method.
     }
 
-    /**
-     * @param  Order  $order
-     * @param  bool  $confirmed
-     * @param  ShippingAddress|null  $address
-     * @param  string|null  $shippingMethod
-     * @return Order
-     */
-    public function createOrder(Order $order, bool $confirmed, ?ShippingAddress $address, string $shippingMethod = null): Order
+    public function createOrder($order, bool $confirmed, $address = null, string $shippingMethod = null)
     {
         return (new DriverManager($this))->createorder($order, $confirmed, $address, $shippingMethod);
     }
 
-    public function calculateShippingRates(ShippingAddress $address, array $items): array
+    public function calculateShippingRates($address, array $items): array
     {
         // TODO: Implement calculateShippingRates() method.
     }

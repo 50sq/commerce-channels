@@ -2,8 +2,6 @@
 
 namespace FiftySq\Commerce\Channels\Drivers\Contracts;
 
-use FiftySq\Commerce\Channels\Drivers\Data\Order;
-use FiftySq\Commerce\Channels\Drivers\Data\ShippingAddress;
 use Illuminate\Http\Request;
 
 interface HasOrders
@@ -15,21 +13,21 @@ interface HasOrders
     public function getOrder($orderId);
 
     /**
-     * @param  Order  $order
-     * @param  ShippingAddress|null  $address
+     * @param $order
+     * @param  null  $address
      * @param  string|null  $shippingMethod
      * @return mixed
      */
-    public function estimateCost(Order $order, ?ShippingAddress $address, string $shippingMethod = null);
+    public function estimateCost($order, $address = null, string $shippingMethod = null);
 
     /**
-     * @param  Order  $order
+     * @param $order
      * @param  bool  $confirmed
-     * @param  ShippingAddress|null  $address
+     * @param  null  $address
      * @param  string|null  $shippingMethod
      * @return mixed
      */
-    public function createOrder(Order $order, bool $confirmed, ?ShippingAddress $address, string $shippingMethod = null);
+    public function createOrder($order, bool $confirmed, $address = null, string $shippingMethod = null);
 
     /**
      * @param  Request  $request

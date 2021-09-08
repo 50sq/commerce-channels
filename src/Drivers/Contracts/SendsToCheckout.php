@@ -2,8 +2,6 @@
 
 namespace FiftySq\Commerce\Channels\Drivers\Contracts;
 
-use FiftySq\Commerce\Channels\Drivers\Data\Models\PendingOrder;
-
 interface SendsToCheckout
 {
     /**
@@ -11,5 +9,5 @@ interface SendsToCheckout
      *
      * @return mixed
      */
-    public function sendToCheckout(PendingOrder $pending_order);
+    public function sendToCheckout($pending_order);
 }
